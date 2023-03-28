@@ -82,7 +82,6 @@ async def add_transaction(request):
 
 
 app = web.Application()
-app.add_routes([web.get('/users/{user_id}/balance/{date}', get_balance)])
 
 
 def setup_routes(app):
