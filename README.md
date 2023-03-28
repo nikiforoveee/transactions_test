@@ -19,4 +19,5 @@
 4)(routes.py 71 строка) стоит проверка
 
 docker build -t my_app .
-docker run -p 8080:8080 --env-file .env my_app
+docker-compose up
+http://0.0.0.0:8000
