@@ -20,5 +20,7 @@
 
 # commands
 docker build -t my_app .
+
 docker-compose up
+
 http://0.0.0.0:8000
