@@ -39,12 +39,12 @@ async def get_balance(request):
         return web.json_response({'balance': str(user.balance)}, status=200)
     if date_str:
         date = datetime.strptime(date_str, '%Y-%m-%d %H:%M:%S.%f')
-        print(date)
+
         balance = await Transaction.select('current_balance').where(
             (Transaction.user_id == user_id) & (Transaction.created_at <= date)).order_by(
             Transaction.created_at.desc()).limit(
             1).gino.scalar()
-        print(balance)
+
         return web.json_response({'balance': str(balance)}, status=200)
 
 
