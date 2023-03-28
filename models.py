@@ -4,13 +4,13 @@ from gino import Gino
 
 db = Gino()
 # DB_URI = 'postgres://postgres:postgrespw@localhost:32775'
-DB_HOST=os.environ["DB_HOST"]
-DB_PORT=int(os.environ["DB_PORT"])
-DB_USER=os.environ["DB_USER"]
-DB_PASSWORD=os.environ["DB_PASSWORD"]
-DB_NAME=os.environ["DB_NAME"]
+DB_HOST = os.environ["DB_HOST"]
+DB_PORT = int(os.environ["DB_PORT"])
+DB_USER = os.environ["DB_USER"]
+DB_PASSWORD = os.environ["DB_PASSWORD"]
+DB_NAME = os.environ["DB_NAME"]
 
-DB_URI = 'postgresql://'+DB_USER+':'+DB_PASSWORD+'@'+DB_HOST+':'+str(DB_PORT)+'/'+DB_NAME
+DB_URI = 'postgresql://' + DB_USER + ':' + DB_PASSWORD + '@' + DB_HOST + ':' + str(DB_PORT) + '/' + DB_NAME
 
 
 class User(db.Model):
