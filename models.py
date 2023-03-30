@@ -29,5 +29,5 @@ class Transaction(db.Model):
     amount = db.Column(db.Numeric(precision=10, scale=2), nullable=False)
     current_balance = db.Column(db.Numeric(precision=10, scale=2), nullable=False)
     user_id = db.Column(db.Integer(), db.ForeignKey('users.id', ondelete='CASCADE'), nullable=False)
-    uid = db.Column(db.String(), nullable=False)
+    uid = db.Column(db.String(), nullable=False, unique=True)
     created_at = db.Column(db.DateTime(), server_default=db.func.now())
