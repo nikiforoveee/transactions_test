@@ -4,6 +4,31 @@ from aiohttp import web
 
 from models import User, db, Transaction
 
+from jsonschema import validate, ValidationError
+import json
+
+
+transaction_schema = {
+    "type": "object",
+    "properties": {
+        "user_id": {"type": "integer", "minimum": 1},
+        "amount": {"type": "number", "minimum": 0.01},
+        "type": {"type": "string", "enum": ["WITHDRAW", "DEPOSIT"]},
+        "uid": {"type": "string", "minLength": 1},
+    },
+    "required": ["user_id", "amount", "type", "uid"],
+}
+
+
+
+
+def validate_transaction_data(data):
+    try:
+        validate(instance=data, schema=transaction_schema)
+    except ValidationError as e:
+        return False, str(e)
+    return True, ""
+
 
 async def hello(request):
     return web.Response(text='Hello, world!')
@@ -57,9 +82,17 @@ async def get_transaction(request):
 
 
 async def add_transaction(request):
+    data = await request.json()
+    is_valid, error = validate_transaction_data(data)
+
+    if not is_valid:
+        return web.json_response({"error": error}, status=400)
+
     async with db.transaction():
-        data = await request.json()
         user = await User.query.where(User.id == data['user_id']).with_for_update().gino.first()
+
+        if user is None:
+            return web.json_response({"error": "User not found"}, status=404)
 
         amount = abs(float(data['amount']))
         users_balance = float(user.balance)
