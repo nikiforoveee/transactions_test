@@ -5,7 +5,6 @@ from aiohttp import web
 from models import User, db, Transaction
 
 from jsonschema import validate, ValidationError
-import json
 
 
 transaction_schema = {
